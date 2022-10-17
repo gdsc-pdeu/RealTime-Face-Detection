@@ -5,6 +5,7 @@ from django.http import StreamingHttpResponse
 import cv2
 import threading
 import os
+import winsound
 
 FACE_DETECTOR_PATH_1 = "{base_path}/frontal face.xml".format(base_path=os.path.abspath(os.path.dirname(__file__)))
 FACE_DETECTOR_PATH_2 = "{base_path}/frontalface_alt.xml".format(base_path=os.path.abspath(os.path.dirname(__file__)))
@@ -86,7 +87,9 @@ def detect(gray, frame) :
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
         roi_gray = gray[y:y+h, x:x+w] 
         roi_color = frame[y:y+h, x:x+w]
-
+    
+    winsound.Beep(440, 500)
+    
     return frame
 
 def gen(camera):
