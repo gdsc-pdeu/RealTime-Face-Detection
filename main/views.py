@@ -6,7 +6,8 @@ import cv2
 import threading
 import os
 
-FACE_DETECTOR_PATH = "{base_path}/frontal face.xml".format(base_path=os.path.abspath(os.path.dirname(__file__)))
+FACE_DETECTOR_PATH_1 = "{base_path}/frontal face.xml".format(base_path=os.path.abspath(os.path.dirname(__file__)))
+FACE_DETECTOR_PATH_2 = "{base_path}/frontalface_alt.xml".format(base_path=os.path.abspath(os.path.dirname(__file__)))
 
 @gzip.gzip_page
 def With_0(request):
@@ -76,9 +77,11 @@ class VideoCamera_1(object):
     
 #For detection
 def detect(gray, frame) :  
-    face_cascade = cv2.CascadeClassifier(FACE_DETECTOR_PATH)
+    face_cascade_1 = cv2.CascadeClassifier(FACE_DETECTOR_PATH_1)
+    face_cascade_2 = cv2.CascadeClassifier(FACE_DETECTOR_PATH_1)
     
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5) 
+    faces = np.append(face_cascade_1.detectMultiScale(gray, 1.3, 5),face_cascade_2.detectMultiScale(gray, 1.3, 5))
+    
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
         roi_gray = gray[y:y+h, x:x+w] 
